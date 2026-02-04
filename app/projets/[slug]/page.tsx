@@ -3,8 +3,20 @@ import Link from 'next/link';
 import { db } from '@/lib/firebase';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 
+// Interface pour typer un projet
+interface Projet {
+  id?: string;
+  title?: string;
+  description?: string;
+  image?: string;
+  images?: string[];
+  details?: string[];
+  slug?: string;
+  [key: string]: any;
+}
+
 // Fonction pour récupérer un projet depuis Firestore
-async function getProjet(slug: string) {
+async function getProjet(slug: string): Promise<Projet | null> {
   try {
     const projetsRef = collection(db, 'projets');
     const q = query(projetsRef, where('slug', '==', slug), where('published', '==', true));
@@ -18,7 +30,7 @@ async function getProjet(slug: string) {
     return {
       id: doc.id,
       ...doc.data()
-    };
+    } as Projet;
   } catch (error) {
     console.error('Erreur lors de la récupération du projet:', error);
     return null;
@@ -97,11 +109,11 @@ export default async function ProjetPage({ params }: { params: { slug: string } 
   const { slug } = params;
   
   // Essayer de récupérer depuis Firestore, sinon utiliser les données par défaut
-  let projet = await getProjet(slug);
+  let projet: Projet | null = await getProjet(slug);
   
   if (!projet) {
     // Fallback vers les données par défaut
-    projet = projetsDefault[slug as keyof typeof projetsDefault] as any;
+    projet = projetsDefault[slug as keyof typeof projetsDefault] as Projet;
   }
 
   if (!projet) {
@@ -135,7 +147,7 @@ export default async function ProjetPage({ params }: { params: { slug: string } 
           <div className="w-full h-[60vh] md:h-[70vh] relative overflow-hidden bg-gray-200">
             <Image
               src={projet.image || projet.images?.[0] || '/images/villar1archi.png'}
-              alt={projet.title}
+              alt={projet.title || 'Projet'}
               fill
               className="object-cover"
               priority
@@ -152,10 +164,10 @@ export default async function ProjetPage({ params }: { params: { slug: string } 
           {/* Title */}
           <div className="mb-8 md:mb-12">
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 tracking-tight mb-4">
-              {projet.title}
+              {projet.title || 'Projet'}
             </h1>
             <p className="text-lg md:text-xl text-gray-600 max-w-3xl">
-              {projet.description}
+              {projet.description || ''}
             </p>
           </div>
 
@@ -193,11 +205,11 @@ export default async function ProjetPage({ params }: { params: { slug: string } 
                 Galerie
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-                {projet.images.map((image: string, index: number) => (
+                {projet.images?.map((image: string, index: number) => (
                   <div key={index} className="aspect-[4/3] relative overflow-hidden bg-gray-200">
                     <Image
                       src={image}
-                      alt={`${projet.title} - Image ${index + 1}`}
+                      alt={`${projet.title || 'Projet'} - Image ${index + 1}`}
                       fill
                       className="object-cover"
                       quality={90}
