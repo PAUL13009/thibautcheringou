@@ -4,13 +4,18 @@ import { getStorage } from 'firebase/storage';
 import { getAuth } from 'firebase/auth';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDeHhqLaa6Ozj54So4jGTYAa2rO0MCv4yY",
-  authDomain: "thibautcheringouarchi.firebaseapp.com",
-  projectId: "thibautcheringouarchi",
-  storageBucket: "thibautcheringouarchi.firebasestorage.app",
-  messagingSenderId: "298168418621",
-  appId: "1:298168418621:web:dd43bb7adf09e379614554"
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID
 };
+
+// Vérifier que toutes les variables d'environnement sont définies
+if (!firebaseConfig.apiKey || !firebaseConfig.authDomain || !firebaseConfig.projectId) {
+  throw new Error('Les variables d\'environnement Firebase ne sont pas configurées. Veuillez vérifier votre fichier .env.local');
+}
 
 // Initialize Firebase
 const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
