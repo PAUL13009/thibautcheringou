@@ -223,22 +223,6 @@ export default async function ProjetPage({ params }: { params: { slug: string } 
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-12 border-t border-gray-200">
-        <div className="max-w-[1920px] mx-auto px-6 sm:px-8 lg:px-12 xl:px-16">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-gray-600 text-sm">
-              2026 - Thibaut Cheringou Architecture
-            </p>
-            <Link 
-              href="/#contact"
-              className="px-6 py-3 bg-gray-900 text-white hover:bg-gray-800 transition-colors font-medium tracking-wide text-sm uppercase"
-            >
-              Nous contacter
-            </Link>
-          </div>
-        </div>
-      </footer>
     </main>
   );
 }

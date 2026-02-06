@@ -691,7 +691,7 @@ export default function Home() {
           {/* Footer Text */}
           <div className="mt-16 pt-8 border-t border-gray-800">
             <p className="text-gray-400 text-sm text-center mb-4">
-              2026 - ARCHSTUDIO
+              2026 - Agence Thibaut Cheringou
             </p>
             <div className="text-center">
               <a 
