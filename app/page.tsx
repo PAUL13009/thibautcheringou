@@ -4,6 +4,115 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import ProjectsList from '@/components/ProjectsList';
+import { db } from '@/lib/firebase';
+import { collection, addDoc } from 'firebase/firestore';
+
+// Composant pour le formulaire de contact
+function ContactForm() {
+  const [nom, setNom] = useState('');
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+  const [submitting, setSubmitting] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    setSubmitting(true);
+
+    if (!nom.trim() || !email.trim() || !message.trim()) {
+      setError('Veuillez remplir tous les champs obligatoires.');
+      setSubmitting(false);
+      return;
+    }
+
+    try {
+      await addDoc(collection(db, 'contact'), {
+        nom: nom.trim(),
+        email: email.trim(),
+        message: message.trim(),
+        createdAt: new Date(),
+        lu: false
+      });
+
+      setSuccess(true);
+      setNom('');
+      setEmail('');
+      setMessage('');
+      
+      setTimeout(() => {
+        setSuccess(false);
+      }, 5000);
+    } catch (err) {
+      console.error('Erreur lors de l\'envoi du formulaire:', err);
+      setError('Une erreur est survenue. Veuillez réessayer.');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-8">
+      {success && (
+        <div className="p-4 bg-green-500 text-white text-sm">
+          Votre message a été envoyé avec succès. Nous vous répondrons dans les plus brefs délais.
+        </div>
+      )}
+      {error && (
+        <div className="p-4 bg-red-500 text-white text-sm">
+          {error}
+        </div>
+      )}
+      
+      {/* Name Field */}
+      <div>
+        <input
+          type="text"
+          placeholder="Nom*"
+          value={nom}
+          onChange={(e) => setNom(e.target.value)}
+          required
+          className="w-full bg-transparent border-0 border-b border-gray-400 text-white placeholder-gray-400 focus:outline-none focus:border-white transition-colors pb-3 text-base md:text-lg"
+        />
+      </div>
+
+      {/* Email Field */}
+      <div>
+        <input
+          type="email"
+          placeholder="Email*"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          className="w-full bg-transparent border-0 border-b border-gray-400 text-white placeholder-gray-400 focus:outline-none focus:border-white transition-colors pb-3 text-base md:text-lg"
+        />
+      </div>
+
+      {/* Message Field */}
+      <div>
+        <textarea
+          placeholder="Message (Parlez-nous de votre projet)"
+          rows={4}
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          required
+          className="w-full bg-transparent border-0 border-b border-gray-400 text-white placeholder-gray-400 focus:outline-none focus:border-white transition-colors pb-3 resize-none text-base md:text-lg"
+        ></textarea>
+      </div>
+
+      {/* Submit Button */}
+      <button
+        type="submit"
+        disabled={submitting}
+        className="flex items-center gap-2 text-white text-base md:text-lg hover:opacity-80 transition-opacity disabled:opacity-50"
+      >
+        <span>→</span>
+        <span>{submitting ? 'ENVOI EN COURS...' : 'NOUS CONTACTER'}</span>
+      </button>
+    </form>
+  );
+}
 
 export default function Home() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -575,43 +684,7 @@ export default function Home() {
 
             {/* Right Column - Contact Form */}
             <div>
-              <form className="space-y-8">
-                {/* Name Field */}
-                <div>
-                  <input
-                    type="text"
-                    placeholder="Nom*"
-                    className="w-full bg-transparent border-0 border-b border-gray-400 text-white placeholder-gray-400 focus:outline-none focus:border-white transition-colors pb-3 text-base md:text-lg"
-                  />
-                </div>
-
-                {/* Email Field */}
-                <div>
-                  <input
-                    type="email"
-                    placeholder="Email*"
-                    className="w-full bg-transparent border-0 border-b border-gray-400 text-white placeholder-gray-400 focus:outline-none focus:border-white transition-colors pb-3 text-base md:text-lg"
-                  />
-                </div>
-
-                {/* Message Field */}
-                <div>
-                  <textarea
-                    placeholder="Message (Parlez-nous de votre projet)"
-                    rows={4}
-                    className="w-full bg-transparent border-0 border-b border-gray-400 text-white placeholder-gray-400 focus:outline-none focus:border-white transition-colors pb-3 resize-none text-base md:text-lg"
-                  ></textarea>
-                </div>
-
-                {/* Submit Button */}
-                <button
-                  type="submit"
-                  className="flex items-center gap-2 text-white text-base md:text-lg hover:opacity-80 transition-opacity"
-                >
-                  <span>→</span>
-                  <span>NOUS CONTACTER</span>
-                </button>
-              </form>
+              <ContactForm />
             </div>
           </div>
 

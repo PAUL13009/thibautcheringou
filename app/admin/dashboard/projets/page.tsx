@@ -113,14 +113,14 @@ export default function AdminProjets() {
     <div className="min-h-screen bg-white">
       {/* Header */}
       <header className="bg-black text-white">
-        <div className="max-w-[1920px] mx-auto px-6 sm:px-8 lg:px-12 xl:px-16 py-6">
-          <div className="flex items-center justify-between">
-            <h1 className="text-2xl md:text-3xl font-bold uppercase tracking-wide">
+        <div className="max-w-[1920px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-4 md:py-6">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold uppercase tracking-wide">
               Gestion des Projets
             </h1>
             <Link
               href="/admin/dashboard"
-              className="px-4 py-2 bg-white text-black hover:bg-gray-200 transition-colors text-sm uppercase tracking-wide"
+              className="px-4 py-2 bg-white text-black hover:bg-gray-200 transition-colors text-xs sm:text-sm uppercase tracking-wide text-center sm:text-left w-full sm:w-auto"
             >
               Retour au dashboard
             </Link>
@@ -129,13 +129,13 @@ export default function AdminProjets() {
       </header>
 
       {/* Main Content */}
-      <main className="py-12">
-        <div className="max-w-[1920px] mx-auto px-6 sm:px-8 lg:px-12 xl:px-16">
-          <div className="bg-gray-50 p-8 border border-gray-200">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+      <main className="py-6 sm:py-8 md:py-12">
+        <div className="max-w-[1920px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
+          <div className="bg-gray-50 p-4 sm:p-6 md:p-8 border border-gray-200">
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3 sm:mb-4">
               Liste des projets
             </h2>
-            <p className="text-gray-600 mb-6">
+            <p className="text-gray-600 mb-4 sm:mb-6 text-sm sm:text-base">
               Gérez vos projets architecturaux depuis cette interface.
             </p>
             
@@ -183,12 +183,12 @@ export default function AdminProjets() {
                     <div className="p-4">
                       <h3 className="font-bold text-gray-900 mb-2 text-lg">{projet.title || 'Sans titre'}</h3>
                       <p className="text-gray-600 text-sm mb-4 line-clamp-2">{projet.description || 'Aucune description'}</p>
-                      <div className="flex gap-2">
+                      <div className="flex flex-col sm:flex-row gap-2">
                         {projet.slug && (
                           <Link
                             href={`/projets/${projet.slug}`}
                             target="_blank"
-                            className="flex-1 px-4 py-2 bg-gray-200 text-gray-900 hover:bg-gray-300 transition-colors text-sm uppercase text-center"
+                            className="flex-1 px-3 sm:px-4 py-2 bg-gray-200 text-gray-900 hover:bg-gray-300 transition-colors text-xs sm:text-sm uppercase text-center"
                           >
                             Voir
                           </Link>
@@ -198,13 +198,13 @@ export default function AdminProjets() {
                             setEditingProject(projet);
                             setIsModalOpen(true);
                           }}
-                          className="px-4 py-2 bg-black text-white hover:bg-gray-800 transition-colors text-sm uppercase"
+                          className="px-3 sm:px-4 py-2 bg-black text-white hover:bg-gray-800 transition-colors text-xs sm:text-sm uppercase"
                         >
                           Modifier
                         </button>
                         <button
                           onClick={() => handleDelete(projet.id)}
-                          className="px-4 py-2 bg-red-500 text-white hover:bg-red-600 transition-colors text-sm uppercase"
+                          className="px-3 sm:px-4 py-2 bg-red-500 text-white hover:bg-red-600 transition-colors text-xs sm:text-sm uppercase"
                         >
                           Supprimer
                         </button>
@@ -216,13 +216,13 @@ export default function AdminProjets() {
             )}
 
             {/* Add Project Button */}
-            <div className="mt-8">
+            <div className="mt-6 sm:mt-8">
               <button
                 onClick={() => {
                   setEditingProject(null);
                   setIsModalOpen(true);
                 }}
-                className="px-6 py-3 bg-black text-white hover:bg-gray-800 transition-colors uppercase tracking-wide"
+                className="w-full sm:w-auto px-4 sm:px-6 py-2 sm:py-3 bg-black text-white hover:bg-gray-800 transition-colors uppercase tracking-wide text-sm sm:text-base"
               >
                 + Ajouter un projet
               </button>

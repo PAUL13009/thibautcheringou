@@ -53,18 +53,20 @@ export default function AdminDashboard() {
     <div className="min-h-screen bg-white">
       {/* Header */}
       <header className="bg-black text-white">
-        <div className="max-w-[1920px] mx-auto px-6 sm:px-8 lg:px-12 xl:px-16 py-6">
-          <div className="flex items-center justify-between">
-            <h1 className="text-2xl md:text-3xl font-bold uppercase tracking-wide">
+        <div className="max-w-[1920px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-4 md:py-6">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-4">
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold uppercase tracking-wide">
               Dashboard Admin
             </h1>
-            <div className="flex items-center gap-4">
-              <span className="text-sm text-gray-300">
-                Connecté en tant que: {user.email}
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+              <span className="text-xs sm:text-sm text-gray-300 break-all sm:break-normal">
+                <span className="hidden sm:inline">Connecté en tant que: </span>
+                <span className="sm:hidden">Connecté: </span>
+                {user.email}
               </span>
               <button
                 onClick={handleLogout}
-                className="px-4 py-2 bg-white text-black hover:bg-gray-200 transition-colors text-sm uppercase tracking-wide"
+                className="px-4 py-2 bg-white text-black hover:bg-gray-200 transition-colors text-xs sm:text-sm uppercase tracking-wide w-full sm:w-auto"
               >
                 Déconnexion
               </button>
@@ -74,59 +76,45 @@ export default function AdminDashboard() {
       </header>
 
       {/* Main Content */}
-      <main className="py-12">
-        <div className="max-w-[1920px] mx-auto px-6 sm:px-8 lg:px-12 xl:px-16">
+      <main className="py-6 sm:py-8 md:py-12">
+        <div className="max-w-[1920px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
           {/* Welcome Section */}
-          <div className="mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <div className="mb-8 sm:mb-10 md:mb-12">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4">
               Bienvenue dans le Dashboard
             </h2>
-            <p className="text-gray-600 text-lg">
+            <p className="text-gray-600 text-base sm:text-lg">
               Gérez votre site d'architecture depuis cette interface.
             </p>
           </div>
 
           {/* Dashboard Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-8 sm:mb-12">
             {/* Projects Card */}
-            <div className="bg-gray-50 p-6 border border-gray-200">
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Projets</h3>
-              <p className="text-gray-600 mb-4">
+            <div className="bg-gray-50 p-4 sm:p-6 border border-gray-200">
+              <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">Projets</h3>
+              <p className="text-gray-600 mb-4 text-sm sm:text-base">
                 Gérez vos projets architecturaux
               </p>
               <Link
                 href="/admin/dashboard/projets"
-                className="inline-block px-4 py-2 bg-black text-white hover:bg-gray-800 transition-colors text-sm uppercase tracking-wide"
+                className="inline-block w-full sm:w-auto text-center px-4 py-2 bg-black text-white hover:bg-gray-800 transition-colors text-xs sm:text-sm uppercase tracking-wide"
               >
                 Gérer les projets
               </Link>
             </div>
 
-            {/* Gallery Card */}
-            <div className="bg-gray-50 p-6 border border-gray-200">
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Galerie</h3>
-              <p className="text-gray-600 mb-4">
-                Gérez les images de la galerie
+            {/* Contact Card */}
+            <div className="bg-gray-50 p-4 sm:p-6 border border-gray-200">
+              <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">Demandes de Contact</h3>
+              <p className="text-gray-600 mb-4 text-sm sm:text-base">
+                Consultez les demandes de contact reçues
               </p>
               <Link
-                href="/admin/dashboard/galerie"
-                className="inline-block px-4 py-2 bg-black text-white hover:bg-gray-800 transition-colors text-sm uppercase tracking-wide"
+                href="/admin/dashboard/contact"
+                className="inline-block w-full sm:w-auto text-center px-4 py-2 bg-black text-white hover:bg-gray-800 transition-colors text-xs sm:text-sm uppercase tracking-wide"
               >
-                Gérer la galerie
-              </Link>
-            </div>
-
-            {/* Settings Card */}
-            <div className="bg-gray-50 p-6 border border-gray-200">
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Paramètres</h3>
-              <p className="text-gray-600 mb-4">
-                Configurez les paramètres du site
-              </p>
-              <Link
-                href="/admin/dashboard/parametres"
-                className="inline-block px-4 py-2 bg-black text-white hover:bg-gray-800 transition-colors text-sm uppercase tracking-wide"
-              >
-                Paramètres
+                Voir les demandes
               </Link>
             </div>
           </div>
